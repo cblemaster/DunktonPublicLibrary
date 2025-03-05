@@ -36,5 +36,6 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 WebApplication app = builder.Build();
 
 app.MapGet("/", () => "Hello World!");
+app.MapGet("/test", handler: (AppDbContext context) => context.Accounts.Include(a => a.Role).Select(a => new { AccountId = a.Id, RoleId = a.Role.Id, RoleName = a.Role.Name }).ToList());
 
 app.Run();
