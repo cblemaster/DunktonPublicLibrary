@@ -1,5 +1,5 @@
 ﻿
-using EFCorePractice.App.Domain;
+using EFCorePractice.App.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace EFCorePractice.App.Infrastructure;

@@ -1,5 +1,4 @@
-﻿
-namespace EFCorePractice.App.Domain;
+﻿namespace EFCorePractice.App.Domain.Entities;
 
 public sealed class Role
 {

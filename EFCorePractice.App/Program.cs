@@ -1,6 +1,6 @@
 
 using EFCorePractice.App.Cryptography;
-using EFCorePractice.App.Domain;
+using EFCorePractice.App.Domain.Entities;
 using EFCorePractice.App.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
