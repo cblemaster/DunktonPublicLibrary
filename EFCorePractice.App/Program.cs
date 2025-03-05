@@ -3,9 +3,17 @@ using EFCorePractice.App.Domain;
 using EFCorePractice.App.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
-string[] roles = ["admin", "cardholder", "junior_reader"];
-
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+
+IConfigurationRoot configRoot = new ConfigurationBuilder()
+    .AddJsonFile("appsettings.json")
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true)
+    .Build();
+
+string connectionString = configRoot.GetConnectionString("App") ?? "Error retrieving connection string!";
+string jwtSecret = configRoot.GetValue<string>("JwtSecret") ?? "Error retrieving config!";
+string[] roles = configRoot.GetSection("Roles").Get<string[]>() ?? [];
+
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer("Server=.;Database=EFCorePractice;Trusted_Connection=true;Trust Server Certificate=true")
     .UseSeeding((context, _) =>
