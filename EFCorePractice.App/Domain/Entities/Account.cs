@@ -3,7 +3,7 @@
 public sealed class Account : Entity<Account>
 {
     public Role Role { get; set; } = default!;
-    public Guid RoleId { get; set; }
+    public Identifer<Role> RoleId { get; set; }
 
     public string? Token { get; set; }
     public string Username { get; set; } = string.Empty;
