@@ -2,7 +2,6 @@
 
 public sealed class Account : Entity<Account>
 {
-    public Guid Id { get; set; }
     public Role Role { get; set; } = default!;
     public Guid RoleId { get; set; }
 
@@ -13,5 +12,5 @@ public sealed class Account : Entity<Account>
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
     public string FullName => $"{FirstName} {LastName}";
-    public override Identifer<Account> Identifer { get; init; }
+    public override Identifer<Account> Id { get; init; }
 }
