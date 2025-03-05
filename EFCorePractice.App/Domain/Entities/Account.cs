@@ -1,6 +1,6 @@
 ﻿namespace EFCorePractice.App.Domain.Entities;
 
-public sealed class Account
+public sealed class Account : Entity<Account>
 {
     public Guid Id { get; set; }
     public Role Role { get; set; } = default!;
@@ -13,4 +13,5 @@ public sealed class Account
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
     public string FullName => $"{FirstName} {LastName}";
+    public override Identifer<Account> Identifer { get; init; }
 }
