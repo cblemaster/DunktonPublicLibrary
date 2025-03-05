@@ -11,11 +11,13 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Account>().ToTable(nameof(Account));
-        modelBuilder.Entity<Account>().HasKey(a => a.Id).HasName("PK_Account");
         modelBuilder.Entity<Role>().ToTable(nameof(Role));
         modelBuilder.Entity<Role>().HasKey(r => r.Id).HasName("PK_Role");
         modelBuilder.Entity<Role>().Property(r => r.Name).IsRequired().HasMaxLength(30).IsUnicode(false);
+        //modelBuilder.Entity<Role>().Navigation(r => r.Accounts).AutoInclude(false);
+        
+        modelBuilder.Entity<Account>().ToTable(nameof(Account));
+        modelBuilder.Entity<Account>().HasKey(a => a.Id).HasName("PK_Account");
         modelBuilder.Entity<Account>()
             .HasOne(a => a.Role)
             .WithMany(a => a.Accounts)
