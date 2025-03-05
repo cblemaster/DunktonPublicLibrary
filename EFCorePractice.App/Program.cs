@@ -1,7 +1,12 @@
 
+using EFCorePractice.App.Cryptography;
 using EFCorePractice.App.Domain;
 using EFCorePractice.App.Infrastructure;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -40,6 +45,35 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         }
         await context.SaveChangesAsync(cancelToken);
     }));
+
+builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
+builder.Services.AddSingleton<ITokenGenerator>(j => new JwtGenerator(jwtSecret));
+builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(Program).Assembly));
+
+byte[] key = Encoding.ASCII.GetBytes(jwtSecret);
+JwtSecurityTokenHandler.DefaultInboundClaimTypeMap[JwtRegisteredClaimNames.Sub] = "sub";
+
+builder.Services.AddAuthentication(a =>
+{
+    a.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    a.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(b =>
+{
+    b.RequireHttpsMetadata = false;
+    b.SaveToken = true;
+    b.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(key),
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        NameClaimType = "name"
+    };
+});
+
+builder.Services.AddAuthorizationBuilder().AddPolicy("requireauthuser", policy => policy.RequireAuthenticatedUser());
+
 
 WebApplication app = builder.Build();
 
