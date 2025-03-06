@@ -1,4 +1,4 @@
 ﻿
 namespace EFCorePractice.App.Application.Register;
 
-public record RegisterResponse(ResponseType ResponseTypes, string Message) : ResponseBase(ResponseTypes, Message);
+public sealed record RegisterResponse(ResponseType ResponseTypes, string Message) : ResponseBase(ResponseTypes, Message);
