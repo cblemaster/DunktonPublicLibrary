@@ -1,4 +1,5 @@
-﻿namespace EFCorePractice.App.Domain.Entities;
+﻿
+namespace EFCorePractice.App.Domain.Entities;
 
 public sealed class Account : Entity<Account>
 {
@@ -12,5 +13,7 @@ public sealed class Account : Entity<Account>
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
     public string FullName => $"{FirstName} {LastName}";
+    public DateTime CreateDate { get; set; }
+    public DateTime? UpdateDate { get; set; }
     public override Identifer<Account> Id { get; init; }
 }
