@@ -5,5 +5,5 @@ public sealed class Role : Entity<Role>
 {
     public string Name { get; set; } = string.Empty;
     public ICollection<Account> Accounts { get; set; } = [];
-    public override Identifer<Role> Id { get; init; }
+    public override Identifer<Role> Id { get; init; } = default!;
 }

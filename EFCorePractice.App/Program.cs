@@ -28,7 +28,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         {
             if (!dbRoles.Any(r => r == role))
             {
-                context.Set<Role>().Add(new Role() { Name = role, Id = new Identifer<Role>() { Value = Guid.NewGuid() }});
+                context.Set<Role>().Add(new Role() { Name = role, Id = new Identifer<Role>() { Value = Guid.NewGuid() } });
             }
         }
         context.SaveChanges();

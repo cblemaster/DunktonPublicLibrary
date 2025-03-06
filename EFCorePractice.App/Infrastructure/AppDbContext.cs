@@ -18,7 +18,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 
         modelBuilder.Entity<Account>().ToTable(nameof(Account));
         modelBuilder.Entity<Account>().HasKey(a => a.Id).HasName("PK_Account");
-        modelBuilder.Entity<Account>().Property(r => r.Id).HasConversion(i => i.Value, i => new Identifer<Account>() { Value = i });
+        modelBuilder.Entity<Account>().Property(a => a.Id).HasConversion(i => i.Value, i => new Identifer<Account>() { Value = i });
         modelBuilder.Entity<Account>()
             .HasOne(a => a.Role)
             .WithMany(a => a.Accounts)
