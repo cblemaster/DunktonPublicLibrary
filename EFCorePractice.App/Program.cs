@@ -28,7 +28,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         {
             if (!dbRoles.Any(r => r == role))
             {
-                context.Set<Role>().Add(new Role() { Name = role, Id = new Identifer<Role>() { Value = Guid.NewGuid() } });
+                context.Set<Role>().Add(Role.CreateForDataSeeding(role));
             }
         }
         context.SaveChanges();
@@ -40,7 +40,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         {
             if (!await dbRoles.AnyAsync(r => r == role, cancellationToken: cancelToken))
             {
-                await context.Set<Role>().AddAsync(new Role() { Name = role, Id = new Identifer<Role>() { Value = Guid.NewGuid() } }, cancelToken);
+                await context.Set<Role>().AddAsync(Role.CreateForDataSeeding(role), cancelToken);
             }
         }
         await context.SaveChangesAsync(cancelToken);
