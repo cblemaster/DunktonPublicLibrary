@@ -26,18 +26,18 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             .OnDelete(DeleteBehavior.ClientSetNull)
             .HasConstraintName("FK_Account_Role");
         modelBuilder.Entity<Account>()
-            .Ignore(a => a.Token);
+            .ComplexProperty(a => a.Credentials).Property(c => c.Username).IsRequired().HasMaxLength(16).IsUnicode(false).HasColumnName("Username");
         modelBuilder.Entity<Account>()
-            .Property(a => a.Username).IsRequired().HasMaxLength(16).IsUnicode(false);
+            .ComplexProperty(a => a.Credentials).Property(c => c.PasswordHash).IsRequired().HasMaxLength(255).IsUnicode(false).HasColumnName("PasswordHash");
         modelBuilder.Entity<Account>()
-            .Property(a => a.PasswordHash).IsRequired().HasMaxLength(255).IsUnicode(false);
+            .ComplexProperty(a => a.Credentials).Property(c => c.PasswordSalt).IsRequired().HasMaxLength(255).IsUnicode(false).HasColumnName("PasswordSalt");
         modelBuilder.Entity<Account>()
-            .Property(a => a.PasswordSalt).IsRequired().HasMaxLength(255).IsUnicode(false);
+            .Ignore(c => c.Credentials.Token);
         modelBuilder.Entity<Account>()
-            .Property(a => a.FirstName).IsRequired().HasMaxLength(50).IsUnicode(false);
+            .ComplexProperty(a => a.Names).Property(c => c.FirstName).IsRequired().HasMaxLength(50).IsUnicode(false).HasColumnName("FirstName");
         modelBuilder.Entity<Account>()
-            .Property(a => a.LastName).IsRequired().HasMaxLength(50).IsUnicode(false);
+            .ComplexProperty(a => a.Names).Property(c => c.LastName).IsRequired().HasMaxLength(50).IsUnicode(false).HasColumnName("LastName");
         modelBuilder.Entity<Account>()
-            .HasIndex(a => a.Username).IsUnique();
+            .HasIndex(a => a.Credentials.Username).IsUnique();
     }
 }
