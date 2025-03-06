@@ -48,6 +48,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
 builder.Services.AddSingleton<ITokenGenerator>(j => new JwtGenerator(jwtSecret));
+builder.Services.AddScoped<IRepository<Account>, Repository<Account>>();
+builder.Services.AddScoped<IRepository<Role>, Repository<Role>>();
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(Program).Assembly));
 
 byte[] key = Encoding.ASCII.GetBytes(jwtSecret);
