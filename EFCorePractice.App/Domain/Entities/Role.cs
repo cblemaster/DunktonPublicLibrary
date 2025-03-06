@@ -14,5 +14,5 @@ public sealed class Role : Entity<Role>
         Id = Identifer<Role>.CreateNewId();
     }
 
-    public static Role CreateForDataSeeding(string rolename) => new(rolename);  // TODO: validate role name
+    public static Role CreateForDataSeeding(string rolename) => new(rolename);
 }
