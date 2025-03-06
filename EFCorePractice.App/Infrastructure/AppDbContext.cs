@@ -28,11 +28,11 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         modelBuilder.Entity<Account>()
             .ComplexProperty(a => a.Credentials).Property(c => c.Username).IsRequired().HasMaxLength(16).IsUnicode(false).HasColumnName("Username");
         modelBuilder.Entity<Account>()
+            .Ignore(a => a.Token);
+        modelBuilder.Entity<Account>()
             .ComplexProperty(a => a.Credentials).Property(c => c.PasswordHash).IsRequired().HasMaxLength(255).IsUnicode(false).HasColumnName("PasswordHash");
         modelBuilder.Entity<Account>()
             .ComplexProperty(a => a.Credentials).Property(c => c.PasswordSalt).IsRequired().HasMaxLength(255).IsUnicode(false).HasColumnName("PasswordSalt");
-        modelBuilder.Entity<Account>()
-            .Ignore(c => c.Credentials.Token);
         modelBuilder.Entity<Account>()
             .ComplexProperty(a => a.Names).Property(c => c.FirstName).IsRequired().HasMaxLength(50).IsUnicode(false).HasColumnName("FirstName");
         modelBuilder.Entity<Account>()
