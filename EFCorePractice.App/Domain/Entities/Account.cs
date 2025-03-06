@@ -1,19 +1,14 @@
 ﻿
+using EFCorePractice.App.Domain.ValueObjects;
+
 namespace EFCorePractice.App.Domain.Entities;
 
 public sealed class Account : Entity<Account>
 {
     public Role Role { get; set; } = default!;
     public Identifer<Role> RoleId { get; set; }
-
-    public string? Token { get; set; }
-    public string Username { get; set; } = string.Empty;
-    public string PasswordHash { get; set; } = string.Empty;
-    public string PasswordSalt { get; set; } = string.Empty;
-    public string FirstName { get; set; } = string.Empty;
-    public string LastName { get; set; } = string.Empty;
-    public string FullName => $"{FirstName} {LastName}";
-    public DateTime CreateDate { get; set; }
-    public DateTime? UpdateDate { get; set; }
+    public Credentials Credentials { get; set; }
+    public Names Names { get; set; }
+    public DateStamps Dates { get; set; }    
     public override Identifer<Account> Id { get; init; }
 }
