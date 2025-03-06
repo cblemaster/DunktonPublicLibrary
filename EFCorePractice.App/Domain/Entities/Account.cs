@@ -11,7 +11,7 @@ public sealed class Account : Entity<Account>
     public Identifer<Role> RoleId { get; set; }
     public Credentials Credentials { get; set; }
     public Names Names { get; set; }
-    public DateStamps Dates { get; set; }    
+    public DateStamps Dates { get; set; }
     public override Identifer<Account> Id { get; init; }
 
     public void ChangePassword(PasswordHash hash) => Credentials = Credentials with { PasswordHash = hash.Hash, PasswordSalt = hash.Salt };

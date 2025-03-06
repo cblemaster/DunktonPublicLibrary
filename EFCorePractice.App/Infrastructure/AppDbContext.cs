@@ -42,6 +42,6 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         modelBuilder.Entity<Account>()
             .ComplexProperty(a => a.Dates).Property(c => c.UpdateDate).HasColumnName("UpdateDate");
         //modelBuilder.Entity<Account>()
-        //    .HasIndex(a => a.Credentials.Username).IsUnique();  // TODO: Is this even possible in ef core
+        //    .HasIndex(a => a.Credentials.Username).IsUnique();  // TODO: Is this even possible in ef core?
     }
 }
