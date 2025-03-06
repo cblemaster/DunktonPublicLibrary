@@ -38,6 +38,10 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         modelBuilder.Entity<Account>()
             .ComplexProperty(a => a.Names).Property(c => c.LastName).IsRequired().HasMaxLength(50).IsUnicode(false).HasColumnName("LastName");
         modelBuilder.Entity<Account>()
-            .HasIndex(a => a.Credentials.Username).IsUnique();
+            .ComplexProperty(a => a.Dates).Property(c => c.CreateDate).IsRequired().HasColumnName("CreateDate");
+        modelBuilder.Entity<Account>()
+            .ComplexProperty(a => a.Dates).Property(c => c.UpdateDate).HasColumnName("UpdateDate");
+        //modelBuilder.Entity<Account>()
+        //    .HasIndex(a => a.Credentials.Username).IsUnique();  // TODO: Is this even possible in ef core
     }
 }
