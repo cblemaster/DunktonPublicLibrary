@@ -1,4 +1,0 @@
-﻿
-namespace EFCorePractice.App.Application.LogIn;
-
-public sealed record LogInResponse(ResponseType ResponseTypes, string? Message) : ResponseBase(ResponseTypes, Message);
