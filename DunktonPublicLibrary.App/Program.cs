@@ -26,7 +26,7 @@ string jwtSecret = configRoot.GetValue<string>("JwtSecret") ?? "Error retrieving
 string[] roles = configRoot.GetSection("Roles").Get<string[]>() ?? [];
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer("Server=.;Database=EFCorePractice;Trusted_Connection=true;Trust Server Certificate=true")
+    options.UseSqlServer(connectionString)
     .UseSeeding((context, _) =>
     {
         IQueryable<string> dbRoles = context.Set<Role>().Select(r => r.Name);

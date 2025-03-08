@@ -29,7 +29,7 @@ public sealed class RegisterHandler(AppDbContext context, IPasswordHasher passwo
             return new(ResponseType.ValidationError, $"Username {request.Username} is used by another account, usernames must be unique.");
         }
 
-        Role? role = await _context.Set<Role>().SingleOrDefaultAsync(r => r.Name.Equals(request.Username), cancellationToken: cancellationToken);
+        Role? role = await _context.Set<Role>().SingleOrDefaultAsync(r => r.Name.Equals(request.Role), cancellationToken: cancellationToken);
         if (role is null)
         {
             return new(ResponseType.ValidationError, "Role not found.");
