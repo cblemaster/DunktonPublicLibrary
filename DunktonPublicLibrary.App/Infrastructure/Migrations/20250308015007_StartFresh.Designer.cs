@@ -10,10 +10,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace DunktonPublicLibrary.App.Migrations
+namespace DunktonPublicLibrary.App.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250308011602_StartFresh")]
+    [Migration("20250308015007_StartFresh")]
     partial class StartFresh
     {
         /// <inheritdoc />

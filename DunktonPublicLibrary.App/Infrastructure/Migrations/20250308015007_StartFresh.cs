@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace DunktonPublicLibrary.App.Migrations
+namespace DunktonPublicLibrary.App.Infrastructure.Migrations
 {
     /// <inheritdoc />
     public partial class StartFresh : Migration
