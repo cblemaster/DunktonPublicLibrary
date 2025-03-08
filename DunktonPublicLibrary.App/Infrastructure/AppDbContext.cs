@@ -13,7 +13,7 @@ public sealed class AppDbContext(DbContextOptions<AppDbContext> options) : DbCon
     {
         modelBuilder.Entity<Role>().ToTable(nameof(Role));
         modelBuilder.Entity<Role>().HasKey(r => r.Id).HasName("PK_Role");
-        modelBuilder.Entity<Role>().Property(r => r.Name).IsRequired().HasMaxLength(30).IsUnicode(false);
+        modelBuilder.Entity<Role>().Property(r => r.Name).IsRequired().HasMaxLength(DataConstants.ROLE_NAME_MAX_LENGTH).IsUnicode(DataConstants.IS_UNICODE);
         modelBuilder.Entity<Role>().Property(r => r.Id).HasConversion(i => i.Value, i => Identifer<Role>.CreateFromData(i));
 
         modelBuilder.Entity<Account>().ToTable(nameof(Account));
@@ -26,21 +26,21 @@ public sealed class AppDbContext(DbContextOptions<AppDbContext> options) : DbCon
             .OnDelete(DeleteBehavior.ClientSetNull)
             .HasConstraintName("FK_Account_Role");
         modelBuilder.Entity<Account>()
-            .ComplexProperty(a => a.Credentials).Property(c => c.Username).IsRequired().HasMaxLength(16).IsUnicode(false).HasColumnName("Username");
+            .ComplexProperty(a => a.Credentials).Property(c => c.Username).IsRequired().HasMaxLength(DataConstants.USERNAME_MAX_LENGTH).IsUnicode(DataConstants.IS_UNICODE).HasColumnName(DataConstants.USERNAME_COLUMN);
         modelBuilder.Entity<Account>()
             .Ignore(a => a.Token);
         modelBuilder.Entity<Account>()
-            .ComplexProperty(a => a.Credentials).Property(c => c.PasswordHash).IsRequired().HasMaxLength(255).IsUnicode(false).HasColumnName("PasswordHash");
+            .ComplexProperty(a => a.Credentials).Property(c => c.PasswordHash).IsRequired().HasMaxLength(DataConstants.PASSWORD_HASH_MAX_LENGTH).IsUnicode(DataConstants.IS_UNICODE).HasColumnName(DataConstants.PASSWORD_HASH_COLUMN);
         modelBuilder.Entity<Account>()
-            .ComplexProperty(a => a.Credentials).Property(c => c.PasswordSalt).IsRequired().HasMaxLength(255).IsUnicode(false).HasColumnName("PasswordSalt");
+            .ComplexProperty(a => a.Credentials).Property(c => c.PasswordSalt).IsRequired().HasMaxLength(DataConstants.PASSWORD_SALT_MAX_LENGTH).IsUnicode(DataConstants.IS_UNICODE).HasColumnName(DataConstants.PASSWORD_SALT_COLUMN);
         modelBuilder.Entity<Account>()
-            .ComplexProperty(a => a.Names).Property(c => c.FirstName).IsRequired().HasMaxLength(50).IsUnicode(false).HasColumnName("FirstName");
+            .ComplexProperty(a => a.Names).Property(c => c.FirstName).IsRequired().HasMaxLength(DataConstants.FIRST_NAME_MAX_LENGTH).IsUnicode(DataConstants.IS_UNICODE).HasColumnName(DataConstants.FIRST_NAME_COLUMN);
         modelBuilder.Entity<Account>()
-            .ComplexProperty(a => a.Names).Property(c => c.LastName).IsRequired().HasMaxLength(50).IsUnicode(false).HasColumnName("LastName");
+            .ComplexProperty(a => a.Names).Property(c => c.LastName).IsRequired().HasMaxLength(DataConstants.LAST_NAME_MAX_LENGTH).IsUnicode(DataConstants.IS_UNICODE).HasColumnName(DataConstants.LAST_NAME_COLUMN);
         modelBuilder.Entity<Account>()
-            .ComplexProperty(a => a.Dates).Property(c => c.CreateDate).IsRequired().HasColumnName("CreateDate");
+            .ComplexProperty(a => a.Dates).Property(c => c.CreateDate).IsRequired().HasColumnName(DataConstants.CREATE_DATE_COLUMN);
         modelBuilder.Entity<Account>()
-            .ComplexProperty(a => a.Dates).Property(c => c.UpdateDate).HasColumnName("UpdateDate");
+            .ComplexProperty(a => a.Dates).Property(c => c.UpdateDate).HasColumnName(DataConstants.UPDATE_DATE_COLUMN);
         //modelBuilder.Entity<Account>()
         //    .HasIndex(a => a.Credentials.Username).IsUnique();  // TODO: Is this even possible in ef core?
     }
