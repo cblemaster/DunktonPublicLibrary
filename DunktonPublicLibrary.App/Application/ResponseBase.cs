@@ -1,3 +1,4 @@
-﻿namespace DunktonPublicLibrary.App.Application;
+﻿
+namespace DunktonPublicLibrary.App.Application;
 
 public abstract record ResponseBase(ResponseType ResponseType, string? Message);

@@ -1,4 +1,5 @@
-﻿namespace DunktonPublicLibrary.App.Domain.Entities;
+﻿
+namespace DunktonPublicLibrary.App.Domain.Entities;
 
 public sealed class Role : Entity<Role>
 {

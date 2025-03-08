@@ -1,4 +1,5 @@
-﻿namespace DunktonPublicLibrary.App.Cryptography;
+﻿
+namespace DunktonPublicLibrary.App.Cryptography;
 
 public interface ITokenGenerator
 {

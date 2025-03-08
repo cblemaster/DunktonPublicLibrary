@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DunktonPublicLibrary.App.Infrastructure;
 
-public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
+public sealed class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 {
     public DbSet<Account> Accounts { get; set; }
     public DbSet<Role> Roles { get; set; }
