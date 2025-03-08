@@ -1,7 +1,10 @@
 
+using EFCorePractice.App.Application.Register;
 using EFCorePractice.App.Cryptography;
 using EFCorePractice.App.Domain.Entities;
 using EFCorePractice.App.Infrastructure;
+using EFCorePractice.App.Validation;
+using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -50,6 +53,7 @@ builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
 builder.Services.AddSingleton<ITokenGenerator>(j => new JwtGenerator(jwtSecret));
 builder.Services.AddScoped<IRepository<Account>, Repository<Account>>();
 builder.Services.AddScoped<IRepository<Role>, Repository<Role>>();
+builder.Services.AddScoped<IValidator<RegisterCommand>, RegisterCommandValidator>();
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(Program).Assembly));
 
 byte[] key = Encoding.ASCII.GetBytes(jwtSecret);
