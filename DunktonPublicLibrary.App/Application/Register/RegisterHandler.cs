@@ -31,7 +31,7 @@ public sealed class RegisterHandler(AppDbContext context, IPasswordHasher passwo
         Role? role = await _context.Set<Role>().SingleOrDefaultAsync(r => r.Name.Equals(request.Username), cancellationToken: cancellationToken);
         if (role is null)
         {
-            return new(ResponseType.NotFoundError, null);
+            return new(ResponseType.ValidationError, "Role not found.");
         }
         
         PasswordHash hash = _passwordHasher.ComputeHash(request.Password);
