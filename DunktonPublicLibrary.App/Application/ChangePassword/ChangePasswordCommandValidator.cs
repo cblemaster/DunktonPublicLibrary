@@ -1,8 +1,6 @@
-﻿
-using DunktonPublicLibrary.App.Application.ChangePassword;
-using FluentValidation;
+﻿using FluentValidation;
 
-namespace DunktonPublicLibrary.App.Validation;
+namespace DunktonPublicLibrary.App.Application.ChangePassword;
 
 public sealed class ChangePasswordCommandValidator : AbstractValidator<ChangePasswordCommand>
 {

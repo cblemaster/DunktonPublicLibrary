@@ -1,8 +1,6 @@
-﻿
-using DunktonPublicLibrary.App.Application.Register;
-using FluentValidation;
+﻿using FluentValidation;
 
-namespace DunktonPublicLibrary.App.Validation;
+namespace DunktonPublicLibrary.App.Application.Register;
 
 public sealed class RegisterCommandValidator : AbstractValidator<RegisterCommand>
 {
