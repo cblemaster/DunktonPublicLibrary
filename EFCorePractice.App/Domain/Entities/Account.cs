@@ -14,11 +14,24 @@ public sealed class Account : Entity<Account>
     public DateStamps Dates { get; set; }
     public override Identifer<Account> Id { get; init; }
 
-    public void ChangePassword(PasswordHash hash) => Credentials = Credentials with { PasswordHash = hash.Hash, PasswordSalt = hash.Salt };
+    private Account() { }
+    public Account(Role role, Credentials credentials, Names names)
+    {
+        Role = role;
+        RoleId = role.Id;
+        Credentials = credentials;
+        Names = names;
+        Dates = new(DateTime.UtcNow, null);
+        Id = Identifer<Account>.CreateNewId();
+    }
+
+    public void ChangePassword(PasswordHash hash)
+    {
+        Credentials = Credentials with { PasswordHash = hash.Hash, PasswordSalt = hash.Salt };
+        Dates = Dates with { UpdateDate = DateTime.UtcNow };
+    }
 
     public void LogIn(string? token) => Token = token;
 
     public void LogOut() { }
-
-    public Account Register() => new();   // TODO:
 }
