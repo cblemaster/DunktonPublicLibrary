@@ -23,10 +23,10 @@ public sealed class ChangePasswordHandler(AppDbContext context, IPasswordHasher 
             return new(ResponseType.ValidationError, validation.ToString());
         }
 
-        Account? account = await _context.Accounts.SingleOrDefaultAsync(a => a.Credentials.Username.Equals(request.Username));
+        Account? account = await _context.Accounts.SingleOrDefaultAsync(a => a.Credentials.Username.Equals(request.Username), cancellationToken);
         if (account is null)
         {
-            return new(ResponseType.NotFoundError, null);
+            return new(ResponseType.AuthenticationError, null);
         }
 
         bool hashMatch = _passwordHasher.VerifyHashMatch(request.CurrentPassword, request.NewPassword, account.Credentials.PasswordSalt);

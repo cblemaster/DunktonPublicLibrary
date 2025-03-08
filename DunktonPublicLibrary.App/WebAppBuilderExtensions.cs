@@ -44,7 +44,7 @@ public static class WebAppBuilderExtensions
                 await context.SaveChangesAsync(cancelToken);
             }));
     }
-    
+
     public static void RegisterServices(this WebApplicationBuilder builder, string jwtSecret)
     {
         builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
