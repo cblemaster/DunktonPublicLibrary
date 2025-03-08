@@ -1,5 +1,6 @@
 
 using DunktonPublicLibrary.App.Application;
+using DunktonPublicLibrary.App.Application.ChangePassword;
 using DunktonPublicLibrary.App.Application.Register;
 using DunktonPublicLibrary.App.Cryptography;
 using DunktonPublicLibrary.App.Domain.Entities;
@@ -54,9 +55,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
 builder.Services.AddSingleton<ITokenGenerator>(j => new JwtGenerator(jwtSecret));
-builder.Services.AddScoped<IRepository<Account>, Repository<Account>>();
-builder.Services.AddScoped<IRepository<Role>, Repository<Role>>();
 builder.Services.AddScoped<IValidator<RegisterCommand>, RegisterCommandValidator>();
+builder.Services.AddScoped<IValidator<ChangePasswordCommand>, ChangePasswordCommandValidator>();
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(Program).Assembly));
 
 byte[] key = Encoding.ASCII.GetBytes(jwtSecret);
@@ -94,6 +94,18 @@ app.MapPost("/register", handler: async Task<Results<BadRequest<string>, Interna
     {
         ResponseType.ValidationError => TypedResults.BadRequest(response.Message),
         ResponseType.Success => TypedResults.Created(),
+        _ => TypedResults.InternalServerError(),
+    };
+});
+
+app.MapPut("/account/{id:guid}/changepassword", handler: async Task<Results<BadRequest<string>, NotFound, UnauthorizedHttpResult, InternalServerError>> (ChangePasswordCommand command, IMediator mediator) =>
+{
+    ChangePasswordResponse response = await mediator.Send(command);
+    return response.ResponseType switch
+    {
+        ResponseType.ValidationError => TypedResults.BadRequest(response.Message),
+        ResponseType.NotFoundError => TypedResults.NotFound(),
+        ResponseType.AuthenticationError => TypedResults.Unauthorized(),
         _ => TypedResults.InternalServerError(),
     };
 });
