@@ -19,39 +19,25 @@ Sign up as a cardholder today to browse our catalogs and place holds on the mate
 ### Admins
 + Checkin material
 + Checkout material
-+ Register
 + View admin summary
 + View checkouts
 + View holds
 + View unpaid fines
-### Cardholders
+### Cardholders and junior readers
 + Extend checkout
-+ Make payment
 + Place hold
-+ Register
 + Remove hold
 + View cardholder summary
+### Cardholders
++ Make payment
 ### Common
 + Browse catalog
 + Change password
 + Login
 + Logout
++ Register
 + View checkout history
 + View fine history
-## App architecture (evolving)
-+ App (API)
-	+ Use cases
-		+ Requests
-		+ Handlers
-		+ Responses
-	+ Identity (password hashing and token generating)
-	+ Infrastructure (data access)
-+ Domain (models)
-	+ Entities
-	+ Value objects
-+ Services (common to all tiers)
-	+ Validation with FluentValidation
-	+ Current user state
 ## Built with
 + NET 9/ C# 13
 + Microsoft Visual Studio Community 2022
