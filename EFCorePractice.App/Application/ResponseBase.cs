@@ -1,4 +1,4 @@
 ﻿
 namespace EFCorePractice.App.Application;
 
-public abstract record ResponseBase(ResponseType ResponseTypes, string Message);
+public abstract record ResponseBase(ResponseType ResponseTypes, string? Message);
