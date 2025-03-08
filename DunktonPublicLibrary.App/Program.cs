@@ -1,11 +1,14 @@
 
+using DunktonPublicLibrary.App.Application;
 using DunktonPublicLibrary.App.Application.Register;
 using DunktonPublicLibrary.App.Cryptography;
 using DunktonPublicLibrary.App.Domain.Entities;
 using DunktonPublicLibrary.App.Infrastructure;
 using DunktonPublicLibrary.App.Validation;
 using FluentValidation;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -83,7 +86,16 @@ builder.Services.AddAuthorizationBuilder().AddPolicy("requireauthuser", policy =
 
 WebApplication app = builder.Build();
 
-app.MapGet("/", () => "Hello World!");
-app.MapGet("/test", handler: (AppDbContext context) => context.Accounts.Include(a => a.Role).Select(a => new { AccountId = a.Id, RoleId = a.Role.Id, RoleName = a.Role.Name }).ToList());
+app.MapGet("/", () => "Welcome to Dunkton Public Library!");
+app.MapPost("/register", handler: async Task<Results<BadRequest<string>, InternalServerError, Created>> (RegisterCommand command, IMediator mediator) =>
+{
+    RegisterResponse response = await mediator.Send(command);
+    return response.ResponseType switch
+    {
+        ResponseType.ValidationError => TypedResults.BadRequest(response.Message),
+        ResponseType.Success => TypedResults.Created(),
+        _ => TypedResults.InternalServerError(),
+    };
+});
 
 app.Run();
