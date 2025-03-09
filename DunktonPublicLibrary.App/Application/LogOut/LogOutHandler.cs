@@ -4,5 +4,16 @@ namespace DunktonPublicLibrary.App.Application.LogOut;
 
 public sealed class LogOutHandler : IRequestHandler<LogOutCommand, LogOutResponse>
 {
-    public Task<LogOutResponse> Handle(LogOutCommand request, CancellationToken cancellationToken) => throw new NotImplementedException();
+    public async Task<LogOutResponse> Handle(LogOutCommand request, CancellationToken cancellationToken)
+    {
+        if (AccountLoggedIn.IsLoggedIn)
+        {
+            AccountLoggedIn.SetAccount(null);
+            return new(ResponseType.Success, null);
+        }
+        else
+        {
+            return new(ResponseType.UnknownError, null);
+        }
+    }
 }

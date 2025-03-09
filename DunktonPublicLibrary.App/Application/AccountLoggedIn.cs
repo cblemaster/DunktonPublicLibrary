@@ -6,5 +6,6 @@ public static class AccountLoggedIn
 {
     private static Account? _account;
 
-    public static void SetAccount(Account account) => _account = account;
+    public static bool IsLoggedIn => _account is not null && _account.Token is not null;
+    public static void SetAccount(Account? account) => _account = account;
 }

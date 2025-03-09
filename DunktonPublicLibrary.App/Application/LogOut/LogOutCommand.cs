@@ -1,8 +1,6 @@
-﻿using MediatR;
+﻿
+using MediatR;
 
 namespace DunktonPublicLibrary.App.Application.LogOut;
 
-public sealed record LogOutCommand : IRequest<LogOutResponse>
-{
-
-}
+public sealed record LogOutCommand() : IRequest<LogOutResponse>;
