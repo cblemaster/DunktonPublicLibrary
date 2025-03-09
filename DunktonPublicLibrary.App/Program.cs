@@ -1,5 +1,4 @@
-
-using DunktonPublicLibrary.App;
+using DunktonPublicLibrary.App.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);

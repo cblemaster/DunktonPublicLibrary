@@ -1,11 +1,10 @@
-﻿
-using DunktonPublicLibrary.App.Application;
+﻿using DunktonPublicLibrary.App.Application;
 using DunktonPublicLibrary.App.Application.ChangePassword;
 using DunktonPublicLibrary.App.Application.Register;
 using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
 
-namespace DunktonPublicLibrary.App;
+namespace DunktonPublicLibrary.App.Extensions;
 
 public static class WebAppExtensions
 {

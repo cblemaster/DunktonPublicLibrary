@@ -1,5 +1,4 @@
-﻿
-using DunktonPublicLibrary.App.Application.ChangePassword;
+﻿using DunktonPublicLibrary.App.Application.ChangePassword;
 using DunktonPublicLibrary.App.Application.Register;
 using DunktonPublicLibrary.App.Cryptography;
 using DunktonPublicLibrary.App.Domain.Entities;
@@ -11,7 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 
-namespace DunktonPublicLibrary.App;
+namespace DunktonPublicLibrary.App.Extensions;
 
 public static class WebAppBuilderExtensions
 {
