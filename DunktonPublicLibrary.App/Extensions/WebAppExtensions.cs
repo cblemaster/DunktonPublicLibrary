@@ -1,5 +1,6 @@
 ﻿using DunktonPublicLibrary.App.Application;
 using DunktonPublicLibrary.App.Application.ChangePassword;
+using DunktonPublicLibrary.App.Application.LogIn;
 using DunktonPublicLibrary.App.Application.Register;
 using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -19,6 +20,18 @@ public static class WebAppExtensions
                 ResponseType.ValidationError => TypedResults.BadRequest(response.Message),
                 ResponseType.Success => TypedResults.Created(),
                 _ => TypedResults.InternalServerError(),
+            };
+        });
+        app.MapPut("/login", handler: async Task<Results<BadRequest<string>, UnauthorizedHttpResult, NoContent, InternalServerError>> (LogInCommand command, IMediator mediator) =>
+        {
+            LogInResponse response = await mediator.Send(command);
+            return response.ResponseType switch
+            {
+                ResponseType.ValidationError => TypedResults.BadRequest(response.Message),
+                ResponseType.AuthenticationError => TypedResults.Unauthorized(),
+                ResponseType.Success => TypedResults.NoContent(),
+                _ => TypedResults.InternalServerError(),
+                // TODO: the response message has the token...
             };
         });
         app.MapPut("/changepassword", handler: async Task<Results<BadRequest<string>, UnauthorizedHttpResult, NoContent, InternalServerError>> (ChangePasswordCommand command, IMediator mediator) =>

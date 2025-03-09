@@ -1,4 +1,5 @@
 ﻿using DunktonPublicLibrary.App.Application.ChangePassword;
+using DunktonPublicLibrary.App.Application.LogIn;
 using DunktonPublicLibrary.App.Application.Register;
 using DunktonPublicLibrary.App.Cryptography;
 using DunktonPublicLibrary.App.Domain.Entities;
@@ -47,6 +48,7 @@ public static class WebAppBuilderExtensions
         builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
         builder.Services.AddSingleton<ITokenGenerator>(j => new JwtGenerator(jwtSecret));
         builder.Services.AddScoped<IValidator<RegisterCommand>, RegisterCommandValidator>();
+        builder.Services.AddScoped<IValidator<LogInCommand>, LoginCommandValidator>();
         builder.Services.AddScoped<IValidator<ChangePasswordCommand>, ChangePasswordCommandValidator>();
         builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(Program).Assembly));
     }
