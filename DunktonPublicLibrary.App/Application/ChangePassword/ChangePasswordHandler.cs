@@ -17,6 +17,11 @@ public sealed class ChangePasswordHandler(AppDbContext context, IPasswordHasher 
 
     public async Task<ChangePasswordResponse> Handle(ChangePasswordCommand request, CancellationToken cancellationToken)
     {
+        if (request.NewPassword.Equals(request.CurrentPassword))
+        {
+            return new(ResponseType.ValidationError, "New and current passwords cannot be the same.");
+        }
+        
         ValidationResult validation = _validator.Validate(request);
         if (!validation.IsValid)
         {
@@ -29,7 +34,7 @@ public sealed class ChangePasswordHandler(AppDbContext context, IPasswordHasher 
             return new(ResponseType.AuthenticationError, null);
         }
 
-        bool hashMatch = _passwordHasher.VerifyHashMatch(request.CurrentPassword, request.NewPassword, account.Credentials.PasswordSalt);
+        bool hashMatch = _passwordHasher.VerifyHashMatch(account.Credentials.PasswordHash, request.CurrentPassword, account.Credentials.PasswordSalt);
         if (!hashMatch)
         {
             return new(ResponseType.AuthenticationError, null);

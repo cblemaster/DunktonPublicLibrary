@@ -21,13 +21,14 @@ public static class WebAppExtensions
                 _ => TypedResults.InternalServerError(),
             };
         });
-        app.MapPut("/changepassword", handler: async Task<Results<BadRequest<string>, UnauthorizedHttpResult, InternalServerError>> (ChangePasswordCommand command, IMediator mediator) =>
+        app.MapPut("/changepassword", handler: async Task<Results<BadRequest<string>, UnauthorizedHttpResult, NoContent, InternalServerError>> (ChangePasswordCommand command, IMediator mediator) =>
         {
             ChangePasswordResponse response = await mediator.Send(command);
             return response.ResponseType switch
             {
                 ResponseType.ValidationError => TypedResults.BadRequest(response.Message),
                 ResponseType.AuthenticationError => TypedResults.Unauthorized(),
+                ResponseType.Success => TypedResults.NoContent(),
                 _ => TypedResults.InternalServerError(),
             };
         });
