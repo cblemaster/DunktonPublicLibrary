@@ -9,7 +9,7 @@ namespace DunktonPublicLibrary.App;
 
 public static class WebAppExtensions
 {
-    public static void GetEnpoints(this WebApplication app)
+    public static void GetEndpoints(this WebApplication app)
     {
         app.MapGet("/", () => "Welcome to Dunkton Public Library!");
         app.MapPost("/register", handler: async Task<Results<BadRequest<string>, InternalServerError, Created>> (RegisterCommand command, IMediator mediator) =>
@@ -22,7 +22,7 @@ public static class WebAppExtensions
                 _ => TypedResults.InternalServerError(),
             };
         });
-        app.MapPut("/account/{id:guid}/changepassword", handler: async Task<Results<BadRequest<string>, UnauthorizedHttpResult, InternalServerError>> (ChangePasswordCommand command, IMediator mediator) =>
+        app.MapPut("/changepassword", handler: async Task<Results<BadRequest<string>, UnauthorizedHttpResult, InternalServerError>> (ChangePasswordCommand command, IMediator mediator) =>
         {
             ChangePasswordResponse response = await mediator.Send(command);
             return response.ResponseType switch

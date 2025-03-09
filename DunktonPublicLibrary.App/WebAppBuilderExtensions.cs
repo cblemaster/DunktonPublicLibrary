@@ -15,10 +15,9 @@ namespace DunktonPublicLibrary.App;
 
 public static class WebAppBuilderExtensions
 {
-    public static void RegisterDbContext(this WebApplicationBuilder builder, string connectionString, string[] roles)
-    {
-        builder.Services.AddDbContext<AppDbContext>(options =>
-            options.UseSqlServer(connectionString)
+    public static void RegisterDbContext(this WebApplicationBuilder builder, string connectionString, string[] roles) =>
+        builder.Services.AddDbContext<AppDbContext>(options => options
+            .UseSqlServer(connectionString)
             .UseSeeding((context, _) =>
             {
                 IQueryable<string> dbRoles = context.Set<Role>().Select(r => r.Name);
@@ -36,14 +35,13 @@ public static class WebAppBuilderExtensions
                 IQueryable<string> dbRoles = context.Set<Role>().Select(r => r.Name);
                 foreach (string role in roles)
                 {
-                    if (!await dbRoles.AnyAsync(r => r == role, cancellationToken: cancelToken))
+                    if (!await dbRoles.AnyAsync(r => r == role, cancelToken))
                     {
                         await context.Set<Role>().AddAsync(Role.CreateForDataSeeding(role), cancelToken);
                     }
                 }
                 await context.SaveChangesAsync(cancelToken);
             }));
-    }
 
     public static void RegisterServices(this WebApplicationBuilder builder, string jwtSecret)
     {
@@ -77,6 +75,6 @@ public static class WebAppBuilderExtensions
             };
         });
 
-        builder.Services.AddAuthorizationBuilder().AddPolicy("requireauthuser", policy => policy.RequireAuthenticatedUser());
+        builder.Services.AddAuthorizationBuilder().AddPolicy("requires_auth", policy => policy.RequireAuthenticatedUser());
     }
 }
