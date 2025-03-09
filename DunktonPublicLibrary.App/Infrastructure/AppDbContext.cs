@@ -21,7 +21,7 @@ public sealed class AppDbContext(DbContextOptions<AppDbContext> options) : DbCon
         modelBuilder.Entity<Account>().Property(a => a.Id).HasConversion(i => i.Value, i => Identifer<Account>.CreateFromData(i));
         modelBuilder.Entity<Account>()
             .HasOne(a => a.Role)
-            .WithMany(a => a.Accounts)
+            .WithMany(r => r.Accounts)
             .HasForeignKey(e => e.RoleId)
             .OnDelete(DeleteBehavior.ClientSetNull)
             .HasConstraintName("FK_Account_Role");
