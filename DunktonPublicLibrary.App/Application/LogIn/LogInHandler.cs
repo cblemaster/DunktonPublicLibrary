@@ -18,6 +18,11 @@ public sealed class LogInHandler(AppDbContext context, IPasswordHasher passwordH
 
     public async Task<LogInResponse> Handle(LogInCommand request, CancellationToken cancellationToken)
     {
+        if (AccountLoggedIn.IsTokenSet)
+        {
+            return new(ResponseType.UnknownError, null);
+        }
+        
         ValidationResult validation = _validator.Validate(request);
         if (!validation.IsValid)
         {
