@@ -46,7 +46,6 @@ public sealed class ChangePasswordHandler(AppDbContext context, IPasswordHasher 
         await _context.SaveChangesAsync(cancellationToken);
 
         AccountLoggedIn.SetAccount(null);
-        
         return new(ResponseType.Success, null);
     }
 }

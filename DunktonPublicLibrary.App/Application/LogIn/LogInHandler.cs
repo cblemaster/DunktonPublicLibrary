@@ -22,7 +22,7 @@ public sealed class LogInHandler(AppDbContext context, IPasswordHasher passwordH
         {
             return new(ResponseType.UnknownError, null);
         }
-        
+
         ValidationResult validation = _validator.Validate(request);
         if (!validation.IsValid)
         {

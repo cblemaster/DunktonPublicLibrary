@@ -14,8 +14,6 @@ public static class WebAppExtensions
     private const string WELCOME_MESSAGE = "Welcome to Dunkton Public Library!";
     public static void GetEndpoints(this WebApplication app)
     {
-        
-        
         app.MapGet("/", () => WELCOME_MESSAGE);
         app.MapPost("/register", handler: async Task<Results<BadRequest<string>, InternalServerError, Created>> (RegisterCommand command, IMediator mediator) =>
         {
