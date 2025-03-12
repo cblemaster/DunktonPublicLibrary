@@ -44,7 +44,7 @@ public static class WebAppExtensions
                 ResponseType.Success => TypedResults.NoContent(),
                 _ => TypedResults.InternalServerError(),
             };
-        });
+        }).RequireAuthorization("requires_auth");
         app.MapPut("/changepassword", handler: async Task<Results<BadRequest<string>, UnauthorizedHttpResult, NoContent, InternalServerError>> (ChangePasswordCommand command, IMediator mediator) =>
         {
             ChangePasswordResponse response = await mediator.Send(command);
@@ -55,6 +55,6 @@ public static class WebAppExtensions
                 ResponseType.Success => TypedResults.NoContent(),
                 _ => TypedResults.InternalServerError(),
             };
-        });
+        }).RequireAuthorization("requires_auth");
     }
 }
