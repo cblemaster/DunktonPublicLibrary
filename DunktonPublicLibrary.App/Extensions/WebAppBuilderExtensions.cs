@@ -1,4 +1,6 @@
-﻿using DunktonPublicLibrary.App.Application.ChangePassword;
+﻿
+using DunktonPublicLibrary.App.Application;
+using DunktonPublicLibrary.App.Application.ChangePassword;
 using DunktonPublicLibrary.App.Application.LogIn;
 using DunktonPublicLibrary.App.Application.Register;
 using DunktonPublicLibrary.App.Cryptography;
@@ -76,6 +78,6 @@ public static class WebAppBuilderExtensions
             };
         });
 
-        builder.Services.AddAuthorizationBuilder().AddPolicy("requires_auth", policy => policy.RequireAuthenticatedUser());
+        builder.Services.AddAuthorizationBuilder().AddPolicy(AppConstants.AUTH_REQUIRED_POLICY_NAME, policy => policy.RequireAuthenticatedUser());
     }
 }

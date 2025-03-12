@@ -19,7 +19,7 @@ public sealed class ChangePasswordHandler(AppDbContext context, IPasswordHasher 
     {
         if (request.NewPassword.Equals(request.CurrentPassword))
         {
-            return new(ResponseType.ValidationError, "New and current passwords cannot be the same.");
+            return new(ResponseType.ValidationError, AppConstants.NEW_AND_CURRENT_PASSWORDS_SAME_VALIDATION_ERROR);
         }
 
         ValidationResult validation = _validator.Validate(request);

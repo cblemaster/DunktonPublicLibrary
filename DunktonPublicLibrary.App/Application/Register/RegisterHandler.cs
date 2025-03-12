@@ -32,7 +32,7 @@ public sealed class RegisterHandler(AppDbContext context, IPasswordHasher passwo
         Role? role = await _context.Roles.SingleOrDefaultAsync(r => r.Name.Equals(request.Role), cancellationToken);
         if (role is null)
         {
-            return new(ResponseType.ValidationError, "Role not found.");
+            return new(ResponseType.ValidationError, AppConstants.ROLE_NOT_FOUND_VALIDATION_ERROR);
         }
 
         PasswordHash hash = _passwordHasher.ComputeHash(request.Password);

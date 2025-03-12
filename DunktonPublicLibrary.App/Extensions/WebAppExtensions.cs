@@ -11,9 +11,12 @@ namespace DunktonPublicLibrary.App.Extensions;
 
 public static class WebAppExtensions
 {
+    private const string WELCOME_MESSAGE = "Welcome to Dunkton Public Library!";
     public static void GetEndpoints(this WebApplication app)
     {
-        app.MapGet("/", () => "Welcome to Dunkton Public Library!");
+        
+        
+        app.MapGet("/", () => WELCOME_MESSAGE);
         app.MapPost("/register", handler: async Task<Results<BadRequest<string>, InternalServerError, Created>> (RegisterCommand command, IMediator mediator) =>
         {
             RegisterResponse response = await mediator.Send(command);
@@ -44,7 +47,7 @@ public static class WebAppExtensions
                 ResponseType.Success => TypedResults.NoContent(),
                 _ => TypedResults.InternalServerError(),
             };
-        }).RequireAuthorization("requires_auth");
+        }).RequireAuthorization(AppConstants.AUTH_REQUIRED_POLICY_NAME);
         app.MapPut("/changepassword", handler: async Task<Results<BadRequest<string>, UnauthorizedHttpResult, NoContent, InternalServerError>> (ChangePasswordCommand command, IMediator mediator) =>
         {
             ChangePasswordResponse response = await mediator.Send(command);
@@ -55,6 +58,6 @@ public static class WebAppExtensions
                 ResponseType.Success => TypedResults.NoContent(),
                 _ => TypedResults.InternalServerError(),
             };
-        }).RequireAuthorization("requires_auth");
+        }).RequireAuthorization(AppConstants.AUTH_REQUIRED_POLICY_NAME);
     }
 }
