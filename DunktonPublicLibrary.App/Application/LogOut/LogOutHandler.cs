@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿
+using MediatR;
 
 namespace DunktonPublicLibrary.App.Application.LogOut;
 
@@ -6,14 +7,14 @@ public sealed class LogOutHandler : IRequestHandler<LogOutCommand, LogOutRespons
 {
     public async Task<LogOutResponse> Handle(LogOutCommand request, CancellationToken cancellationToken)
     {
-        if (AccountLoggedIn.IsLoggedIn)
+        if (!AccountLoggedIn.IsTokenSet)
         {
-            AccountLoggedIn.SetAccount(null);
-            return new(ResponseType.Success, null);
+            return new(ResponseType.UnknownError, null);
         }
         else
         {
-            return new(ResponseType.UnknownError, null);
+            AccountLoggedIn.SetAccount(null);
+            return new(ResponseType.Success, null);
         }
     }
 }
