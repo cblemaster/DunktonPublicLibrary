@@ -30,8 +30,4 @@ public sealed class Account : Entity<Account>
         Credentials = Credentials with { PasswordHash = hash.Hash, PasswordSalt = hash.Salt };
         Dates = Dates with { UpdateDate = DateTime.UtcNow };
     }
-
-    public void LogIn(string? token) => Token = token;
-
-    public void LogOut() { }
 }

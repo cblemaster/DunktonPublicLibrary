@@ -1,4 +1,5 @@
-﻿namespace DunktonPublicLibrary.App;
+﻿
+namespace DunktonPublicLibrary.App;
 
 public static class DataConstants
 {

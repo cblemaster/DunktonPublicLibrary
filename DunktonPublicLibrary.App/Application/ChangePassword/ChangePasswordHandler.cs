@@ -41,8 +41,7 @@ public sealed class ChangePasswordHandler(AppDbContext context, IPasswordHasher 
         }
 
         PasswordHash hash = _passwordHasher.ComputeHash(request.NewPassword);
-        account.Credentials = account.Credentials with { PasswordHash = hash.Hash, PasswordSalt = hash.Salt };
-        account.Dates = account.Dates with { UpdateDate = DateTime.UtcNow };
+        account.ChangePassword(hash);
         await _context.SaveChangesAsync(cancellationToken);
 
         AccountLoggedIn.SetAccount(null);

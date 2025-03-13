@@ -18,5 +18,5 @@ builder.RegisterServices(jwtSecret);
 builder.RegisterAuthenticationAndAuthorization(jwtSecret);
 
 WebApplication app = builder.Build();
-app.GetEndpoints();
+app.MapEndpoints();
 app.Run();
