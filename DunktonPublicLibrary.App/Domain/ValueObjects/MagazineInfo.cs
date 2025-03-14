@@ -1,3 +1,6 @@
-﻿namespace DunktonPublicLibrary.App.Domain.ValueObjects;
+﻿
+using DunktonPublicLibrary.App.Domain.Entities;
 
-public record struct MagazineInfo(string IssueNumber, string PublicationMonth, string PublicationYear);
+namespace DunktonPublicLibrary.App.Domain.ValueObjects;
+
+public record struct MagazineInfo(Category Category, string IssueNumber, string PublicationMonth, string PublicationYear, int PageCount);
